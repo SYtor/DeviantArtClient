@@ -41,7 +41,7 @@ public class LoginScreenView implements LoginScreenContract.View {
     }
 
     @Override
-    public Observable<LoginScreenContract.LoginOption> onButtonSelected() {
+    public Observable<LoginScreenContract.LoginOption> observeSelectedOption() {
         return loginDataObservable;
     }
 

@@ -1,7 +1,9 @@
 package ua.sytor.deviantartclient.presentation.main.screens.auth;
 
 import android.view.View;
+import android.webkit.WebResourceRequest;
 import android.webkit.WebView;
+import android.webkit.WebViewClient;
 
 import androidx.appcompat.widget.Toolbar;
 
@@ -13,13 +15,15 @@ import io.reactivex.subjects.Subject;
 import ua.sytor.deviantartclient.R;
 import ua.sytor.deviantartclient.core.logger.Logger;
 import ua.sytor.deviantartclient.core.navigator.NavigatorContract;
+import ua.sytor.deviantartclient.presentation.main.screens.auth.data.AuthRedirectData;
 
 public class AuthScreenView implements AuthScreenContract.View {
 
     private NavigatorContract.Navigator navigator;
-    private Subject<AuthScreenContract.AuthData> authSubject;
+    private Subject<AuthRedirectData> authSubject;
 
     private WebView webView;
+    private CustomWebClient webClient;
 
     @Inject
     public AuthScreenView(NavigatorContract.Navigator navigator) {
@@ -35,6 +39,8 @@ public class AuthScreenView implements AuthScreenContract.View {
         navigator.setupToolbar(toolbar);
 
         webView = view.findViewById(R.id.webView);
+        webClient = new CustomWebClient();
+        webView.setWebViewClient(webClient);
 
     }
 
@@ -44,18 +50,40 @@ public class AuthScreenView implements AuthScreenContract.View {
     }
 
     @Override
-    public Observable<AuthScreenContract.AuthData> observeAuthState() {
+    public Observable<AuthRedirectData> observeAuthState() {
         return authSubject;
     }
 
     @Override
-    public void loadAuthPage(String url) {
+    public void loadAuthPage(String url, String redirectUrl) {
+        Logger.log("opening url: " + url);
+        webClient.setRedirectUrl(redirectUrl);
         webView.loadUrl(url);
     }
 
     @Override
     public void navigateToApp() {
         navigator.navigate(R.id.action_auth_fragment_to_search_fragment);
+    }
+
+    class CustomWebClient extends WebViewClient {
+
+        private String redirectUrl;
+
+        public void setRedirectUrl(String redirectUrl) {
+            this.redirectUrl = redirectUrl;
+        }
+
+        @Override
+        public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
+            if (redirectUrl != null && request.getUrl().toString().contains(redirectUrl)) {
+                AuthRedirectData data = new AuthRedirectData(request.getUrl().toString());
+                authSubject.onNext(data);
+                return true;
+            }
+            return false;
+        }
+
     }
 
 }

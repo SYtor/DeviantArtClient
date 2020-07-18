@@ -1,4 +1,4 @@
-package ua.sytor.deviantartclient.core.api.data.deviation;
+package ua.sytor.deviantartclient.core.network.data.deviation;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;

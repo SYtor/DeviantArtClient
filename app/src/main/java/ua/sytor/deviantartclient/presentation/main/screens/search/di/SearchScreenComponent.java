@@ -4,11 +4,11 @@ import androidx.fragment.app.Fragment;
 
 import dagger.BindsInstance;
 import dagger.Component;
-import ua.sytor.deviantartclient.core.api.di.ApiModule;
+import ua.sytor.deviantartclient.core.network.di.NetworkModule;
 import ua.sytor.deviantartclient.core.navigator.di.NavigatorModule;
 import ua.sytor.deviantartclient.presentation.main.screens.search.SearchFragment;
 
-@Component(modules = {SearchScreenModule.class, NavigatorModule.class, ApiModule.class})
+@Component(modules = {SearchScreenModule.class, NavigatorModule.class, NetworkModule.class})
 public interface SearchScreenComponent {
 
     void inject(SearchFragment fragment);

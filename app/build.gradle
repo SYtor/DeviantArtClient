@@ -1,5 +1,14 @@
 apply plugin: 'com.android.application'
 
+apply from: 'configs.gradle'
+
+static def addMandatoryBuildConfig(configs, String name) {
+    def client_id = System.getenv(name)
+    if (client_id == null)
+        throw new GradleException("$name is not set")
+    configs.buildConfigField "String", "$name", "\"$client_id\""
+}
+
 android {
     compileSdkVersion 29
     buildToolsVersion "30.0.0"
@@ -12,6 +21,10 @@ android {
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+        addMandatoryBuildConfig(defaultConfig, "CLIENT_ID")
+        addMandatoryBuildConfig(defaultConfig, "CLIENT_SECRET")
+
     }
 
     compileOptions {

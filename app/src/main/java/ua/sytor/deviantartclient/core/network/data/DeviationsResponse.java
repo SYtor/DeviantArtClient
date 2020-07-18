@@ -1,11 +1,11 @@
-package ua.sytor.deviantartclient.core.api.data;
+package ua.sytor.deviantartclient.core.network.data;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
-import ua.sytor.deviantartclient.core.api.data.deviation.Deviation;
+import ua.sytor.deviantartclient.core.network.data.deviation.Deviation;
 
 public class DeviationsResponse {
 

@@ -21,7 +21,7 @@ public class LoginScreenPresenter extends BaseFragmentPresenter<LoginScreenContr
     public void onAttach(View view) {
         super.onAttach(view);
 
-        Disposable d = getView().onButtonSelected()
+        Disposable d = getView().observeSelectedOption()
                 .observeOn(Schedulers.io())
                 .forEach((loginOption) -> {
                     switch (loginOption) {

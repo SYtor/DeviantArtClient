@@ -7,7 +7,7 @@ public interface LoginScreenContract {
 
     interface View extends FragmentView {
 
-        Observable<LoginOption> onButtonSelected();
+        Observable<LoginOption> observeSelectedOption();
 
         void navigateAuthScreen();
 

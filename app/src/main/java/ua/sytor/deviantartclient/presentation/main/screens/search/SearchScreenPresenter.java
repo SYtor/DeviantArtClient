@@ -6,7 +6,7 @@ import javax.inject.Inject;
 
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
-import ua.sytor.deviantartclient.core.api.BrowseApi;
+import ua.sytor.deviantartclient.core.network.api.BrowseApi;
 import ua.sytor.deviantartclient.core.logger.Logger;
 import ua.sytor.deviantartclient.presentation.base.BaseFragmentPresenter;
 

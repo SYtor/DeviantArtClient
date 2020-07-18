@@ -2,7 +2,7 @@ package ua.sytor.deviantartclient.presentation.main.screens.search.di;
 
 import dagger.Module;
 import dagger.Provides;
-import ua.sytor.deviantartclient.core.api.BrowseApi;
+import ua.sytor.deviantartclient.core.network.api.BrowseApi;
 import ua.sytor.deviantartclient.core.navigator.NavigatorContract;
 import ua.sytor.deviantartclient.presentation.base.BaseFragmentPresenter;
 import ua.sytor.deviantartclient.presentation.main.screens.search.SearchScreenContract;
