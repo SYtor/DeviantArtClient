@@ -1,11 +1,11 @@
 package ua.sytor.deviantartclient.core.network.data;
 
-public class AuthData {
+public class AuthInitiationData {
 
     private String authUrl;
     private String redirectUrl;
 
-    public AuthData(String authUrl, String redirectUrl) {
+    public AuthInitiationData(String authUrl, String redirectUrl) {
         this.authUrl = authUrl;
         this.redirectUrl = redirectUrl;
     }

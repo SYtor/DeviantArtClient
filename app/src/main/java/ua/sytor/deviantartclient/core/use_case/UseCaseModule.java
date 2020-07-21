@@ -1,22 +1,21 @@
 package ua.sytor.deviantartclient.core.use_case;
 
+import dagger.Binds;
 import dagger.Module;
-import dagger.Provides;
-import ua.sytor.deviantartclient.core.network.NetworkContract;
+import ua.sytor.deviantartclient.core.use_case.contracts.CheckIsUserLoggedUseCase;
 import ua.sytor.deviantartclient.core.use_case.contracts.GetAuthDataUseCase;
 import ua.sytor.deviantartclient.core.use_case.contracts.GetUserAccessTokenUseCase;
 
 @Module
-public class UseCaseModule {
+public abstract class UseCaseModule {
 
-    @Provides
-    public GetAuthDataUseCase provideGetAuthUrlUseCase(NetworkContract.Manager networkManager) {
-        return new GetAuthDataUseCaseImpl(networkManager);
-    }
+    @Binds
+    public abstract GetAuthDataUseCase provideGetAuthDataUseCase(GetAuthDataUseCaseImpl impl);
 
-    @Provides
-    public GetUserAccessTokenUseCase provideGetUserAccessTokenUseCase(NetworkContract.Manager networkManager) {
-        return new GetUserAccessTokenUseCaseImpl(networkManager);
-    }
+    @Binds
+    public abstract GetUserAccessTokenUseCase provideGetUserAccessTokenUseCase(GetUserAccessTokenUseCaseImpl impl);
+
+    @Binds
+    public abstract CheckIsUserLoggedUseCase provideCheckIsUserLoggedUseCase(CheckIsUserLoggedUseCaseImpl impl);
 
 }

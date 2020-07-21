@@ -4,17 +4,16 @@ import androidx.fragment.app.Fragment;
 
 import dagger.BindsInstance;
 import dagger.Component;
+import dagger.Subcomponent;
 import ua.sytor.deviantartclient.core.navigator.di.NavigatorModule;
-import ua.sytor.deviantartclient.core.network.di.NetworkModule;
-import ua.sytor.deviantartclient.core.use_case.UseCaseModule;
 import ua.sytor.deviantartclient.presentation.main.screens.auth.AuthFragment;
 
-@Component(modules = {AuthScreenModule.class, NavigatorModule.class, UseCaseModule.class, NetworkModule.class})
+@Subcomponent(modules = {AuthScreenModule.class, NavigatorModule.class})
 public interface AuthScreenComponent {
 
     void inject(AuthFragment fragment);
 
-    @Component.Builder
+    @Subcomponent.Builder
     interface Builder {
 
         @BindsInstance

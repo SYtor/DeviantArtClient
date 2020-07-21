@@ -3,17 +3,16 @@ package ua.sytor.deviantartclient.presentation.main.screens.search.di;
 import androidx.fragment.app.Fragment;
 
 import dagger.BindsInstance;
-import dagger.Component;
-import ua.sytor.deviantartclient.core.network.di.NetworkModule;
+import dagger.Subcomponent;
 import ua.sytor.deviantartclient.core.navigator.di.NavigatorModule;
 import ua.sytor.deviantartclient.presentation.main.screens.search.SearchFragment;
 
-@Component(modules = {SearchScreenModule.class, NavigatorModule.class, NetworkModule.class})
+@Subcomponent(modules = {SearchScreenModule.class, NavigatorModule.class})
 public interface SearchScreenComponent {
 
     void inject(SearchFragment fragment);
 
-    @Component.Builder
+    @Subcomponent.Builder
     interface Builder {
 
         @BindsInstance

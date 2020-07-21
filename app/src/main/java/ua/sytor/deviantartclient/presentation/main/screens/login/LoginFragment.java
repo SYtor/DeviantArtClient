@@ -7,9 +7,9 @@ import androidx.annotation.NonNull;
 import javax.inject.Inject;
 
 import ua.sytor.deviantartclient.R;
+import ua.sytor.deviantartclient.core.utils.DiUtils;
 import ua.sytor.deviantartclient.presentation.base.BaseFragment;
 import ua.sytor.deviantartclient.presentation.base.BaseFragmentPresenter;
-import ua.sytor.deviantartclient.presentation.main.screens.login.di.DaggerLoginScreenComponent;
 
 public class LoginFragment extends BaseFragment<LoginScreenContract.View, BaseFragmentPresenter<LoginScreenContract.View>> {
 
@@ -33,7 +33,8 @@ public class LoginFragment extends BaseFragment<LoginScreenContract.View, BaseFr
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
-        DaggerLoginScreenComponent.builder()
+        DiUtils.getAppComponent(context)
+                .loginScreenBuilder()
                 .fragment(this)
                 .build()
                 .inject(this);

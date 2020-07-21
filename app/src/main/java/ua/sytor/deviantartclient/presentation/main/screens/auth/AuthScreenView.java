@@ -39,6 +39,9 @@ public class AuthScreenView implements AuthScreenContract.View {
         navigator.setupToolbar(toolbar);
 
         webView = view.findViewById(R.id.webView);
+
+        webView.getSettings().setJavaScriptEnabled(true);
+
         webClient = new CustomWebClient();
         webView.setWebViewClient(webClient);
 
@@ -76,7 +79,9 @@ public class AuthScreenView implements AuthScreenContract.View {
 
         @Override
         public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
-            if (redirectUrl != null && request.getUrl().toString().contains(redirectUrl)) {
+            Logger.log("shouldOverrideUrlLoading url:" + request.getUrl());
+            if (redirectUrl != null && request.getUrl().toString().startsWith(redirectUrl)) {
+                Logger.log("overriding");
                 AuthRedirectData data = new AuthRedirectData(request.getUrl().toString());
                 authSubject.onNext(data);
                 return true;

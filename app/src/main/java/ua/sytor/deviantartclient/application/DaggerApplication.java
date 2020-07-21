@@ -3,6 +3,7 @@ package ua.sytor.deviantartclient.application;
 import android.app.Application;
 
 import ua.sytor.deviantartclient.application.di.ApplicationComponent;
+import ua.sytor.deviantartclient.application.di.DaggerApplicationComponent;
 
 public class DaggerApplication extends Application {
 
@@ -11,7 +12,7 @@ public class DaggerApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-
+        applicationComponent = DaggerApplicationComponent.builder().application(this).build();
     }
 
     public ApplicationComponent getAppComponent() {

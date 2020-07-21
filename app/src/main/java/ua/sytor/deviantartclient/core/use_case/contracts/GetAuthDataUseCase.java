@@ -1,7 +1,7 @@
 package ua.sytor.deviantartclient.core.use_case.contracts;
 
-import ua.sytor.deviantartclient.core.network.data.AuthData;
+import ua.sytor.deviantartclient.core.network.data.AuthInitiationData;
 
 public interface GetAuthDataUseCase {
-    AuthData getAuthData();
+    AuthInitiationData getAuthData();
 }

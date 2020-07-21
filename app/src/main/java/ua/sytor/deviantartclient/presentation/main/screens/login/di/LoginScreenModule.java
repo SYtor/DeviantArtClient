@@ -3,6 +3,7 @@ package ua.sytor.deviantartclient.presentation.main.screens.login.di;
 import dagger.Module;
 import dagger.Provides;
 import ua.sytor.deviantartclient.core.navigator.NavigatorContract;
+import ua.sytor.deviantartclient.core.use_case.contracts.CheckIsUserLoggedUseCase;
 import ua.sytor.deviantartclient.presentation.base.BaseFragmentPresenter;
 import ua.sytor.deviantartclient.presentation.main.screens.login.LoginScreenContract;
 import ua.sytor.deviantartclient.presentation.main.screens.login.LoginScreenPresenter;
@@ -17,8 +18,11 @@ public class LoginScreenModule {
     }
 
     @Provides
-    public BaseFragmentPresenter<LoginScreenContract.View> providePresenter(LoginScreenContract.View view) {
-        return new LoginScreenPresenter(view);
+    public BaseFragmentPresenter<LoginScreenContract.View> providePresenter(
+            LoginScreenContract.View view,
+            CheckIsUserLoggedUseCase checkIsUserLoggedUseCas
+    ) {
+        return new LoginScreenPresenter(view, checkIsUserLoggedUseCas);
     }
 
 }

@@ -4,15 +4,16 @@ import androidx.fragment.app.Fragment;
 
 import dagger.BindsInstance;
 import dagger.Component;
+import dagger.Subcomponent;
 import ua.sytor.deviantartclient.core.navigator.di.NavigatorModule;
 import ua.sytor.deviantartclient.presentation.main.screens.login.LoginFragment;
 
-@Component(modules = {LoginScreenModule.class, NavigatorModule.class})
+@Subcomponent(modules = {LoginScreenModule.class, NavigatorModule.class})
 public interface LoginScreenComponent {
 
     void inject(LoginFragment fragment);
 
-    @Component.Builder
+    @Subcomponent.Builder
     interface Builder {
 
         @BindsInstance

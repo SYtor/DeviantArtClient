@@ -4,22 +4,20 @@ import javax.inject.Inject;
 
 import io.reactivex.Completable;
 import ua.sytor.deviantartclient.core.network.NetworkContract;
-import ua.sytor.deviantartclient.core.network.data.AuthData;
-import ua.sytor.deviantartclient.core.use_case.contracts.GetAuthDataUseCase;
 import ua.sytor.deviantartclient.core.use_case.contracts.GetUserAccessTokenUseCase;
 
 class GetUserAccessTokenUseCaseImpl implements GetUserAccessTokenUseCase {
 
-    private NetworkContract.Manager networkManager;
+    private NetworkContract.SessionManager sessionManager;
 
     @Inject
-    public GetUserAccessTokenUseCaseImpl(NetworkContract.Manager networkManager) {
-        this.networkManager = networkManager;
+    public GetUserAccessTokenUseCaseImpl(NetworkContract.SessionManager sessionManager) {
+        this.sessionManager = sessionManager;
     }
 
     @Override
     public Completable getAccessToken(String redirectUrl) {
-        return null;
+        return sessionManager.logIn(redirectUrl);
     }
 
 }

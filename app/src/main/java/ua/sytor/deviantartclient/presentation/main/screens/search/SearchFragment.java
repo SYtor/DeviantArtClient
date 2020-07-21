@@ -7,9 +7,9 @@ import androidx.annotation.NonNull;
 import javax.inject.Inject;
 
 import ua.sytor.deviantartclient.R;
+import ua.sytor.deviantartclient.core.utils.DiUtils;
 import ua.sytor.deviantartclient.presentation.base.BaseFragment;
 import ua.sytor.deviantartclient.presentation.base.BaseFragmentPresenter;
-import ua.sytor.deviantartclient.presentation.main.screens.search.di.DaggerSearchScreenComponent;
 
 public class SearchFragment extends BaseFragment<SearchScreenContract.View, BaseFragmentPresenter<SearchScreenContract.View>> {
 
@@ -30,7 +30,8 @@ public class SearchFragment extends BaseFragment<SearchScreenContract.View, Base
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
-        DaggerSearchScreenComponent.builder()
+        DiUtils.getAppComponent(context)
+                .searchScreenBuilder()
                 .fragment(this)
                 .build()
                 .inject(this);

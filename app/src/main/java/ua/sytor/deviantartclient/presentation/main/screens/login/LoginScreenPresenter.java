@@ -6,19 +6,28 @@ import javax.inject.Inject;
 
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
-import ua.sytor.deviantartclient.core.logger.Logger;
+import ua.sytor.deviantartclient.core.use_case.contracts.CheckIsUserLoggedUseCase;
 import ua.sytor.deviantartclient.presentation.base.BaseFragmentPresenter;
 
 public class LoginScreenPresenter extends BaseFragmentPresenter<LoginScreenContract.View> implements LoginScreenContract.Presenter {
 
+    private CheckIsUserLoggedUseCase checkIsUserLoggedUseCase;
+
     @Inject
-    public LoginScreenPresenter(LoginScreenContract.View view) {
+    public LoginScreenPresenter(
+            LoginScreenContract.View view,
+            CheckIsUserLoggedUseCase checkIsUserLoggedUseCase
+    ) {
         super(view);
-        Logger.log("LoginScreenPresenter");
+        this.checkIsUserLoggedUseCase = checkIsUserLoggedUseCase;
     }
 
     @Override
     public void onAttach(View view) {
+        if (checkIsUserLoggedUseCase.isLogged()) {
+            getView().navigateToApp();
+        }
+
         super.onAttach(view);
 
         Disposable d = getView().observeSelectedOption()

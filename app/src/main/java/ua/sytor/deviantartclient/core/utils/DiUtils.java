@@ -7,7 +7,7 @@ import ua.sytor.deviantartclient.application.di.ApplicationComponent;
 
 public class DiUtils {
 
-    static ApplicationComponent getAppComponent(Context context) {
+    public static ApplicationComponent getAppComponent(Context context) {
         return ((DaggerApplication) context.getApplicationContext()).getAppComponent();
     }
 
