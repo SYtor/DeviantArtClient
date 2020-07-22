@@ -21,28 +21,16 @@ public class DeviationsResponse {
     @Expose
     private List<Deviation> results = null;
 
-    public boolean isHasMore() {
+    public boolean hasMore() {
         return hasMore;
-    }
-
-    public void setHasMore(boolean hasMore) {
-        this.hasMore = hasMore;
     }
 
     public int getNextOffset() {
         return nextOffset;
     }
 
-    public void setNextOffset(int nextOffset) {
-        this.nextOffset = nextOffset;
-    }
-
     public List<Deviation> getResults() {
         return results;
-    }
-
-    public void setResults(List<Deviation> results) {
-        this.results = results;
     }
 
 }

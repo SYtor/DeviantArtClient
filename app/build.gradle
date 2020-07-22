@@ -23,7 +23,6 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
         addMandatoryBuildConfig(defaultConfig, "CLIENT_ID")
-        addMandatoryBuildConfig(defaultConfig, "CLIENT_SECRET")
 
     }
 
@@ -58,13 +57,18 @@ dependencies {
     implementation "com.google.code.gson:gson:$gson_version"
 
     def rx_version = "2.2.12"
+    def rx_android_version = "2.1.1"
     implementation "io.reactivex.rxjava2:rxjava:$rx_version"
-    implementation 'io.reactivex.rxjava2:rxandroid:2.1.1'
+    implementation "io.reactivex.rxjava2:rxandroid:$rx_android_version"
 
     def retrofit_version = "2.9.0"
+    def retrofit_gson_converter_version = "2.1.0"
     implementation "com.squareup.retrofit2:retrofit:$retrofit_version"
     implementation "com.squareup.retrofit2:adapter-rxjava2:$retrofit_version"
-    implementation "com.squareup.retrofit2:converter-gson:2.1.0"
+    implementation "com.squareup.retrofit2:converter-gson:$retrofit_gson_converter_version"
+
+    def picasso_version = "2.71828"
+    implementation "com.squareup.picasso:picasso:$picasso_version"
 
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'

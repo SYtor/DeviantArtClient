@@ -2,49 +2,39 @@ package ua.sytor.deviantartclient.core.network;
 
 import android.net.Uri;
 
-import androidx.annotation.NonNull;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.UUID;
 
 import javax.inject.Inject;
 
 import io.reactivex.Completable;
-import io.reactivex.CompletableObserver;
 import io.reactivex.Single;
-import okhttp3.Authenticator;
-import okhttp3.Request;
-import okhttp3.Response;
-import okhttp3.Route;
 import ua.sytor.deviantartclient.core.network.api.AuthApi;
-import ua.sytor.deviantartclient.core.network.data.UserTokenResponse;
-import ua.sytor.deviantartclient.core.storage.StorageContract;
+import ua.sytor.deviantartclient.core.network.data.AuthInitiationData;
+
+import static ua.sytor.deviantartclient.core.network.NetworkContract.AUTH_PATH;
+import static ua.sytor.deviantartclient.core.network.NetworkContract.CLIENT_ID;
+import static ua.sytor.deviantartclient.core.network.NetworkContract.ENDPOINT;
+import static ua.sytor.deviantartclient.core.network.NetworkContract.REDIRECT_URL;
 
 public class SessionManager implements NetworkContract.SessionManager {
 
-    private static final String USER_TOKEN_KEY = "user_token";
-
     private AuthApi authApi;
-    private StorageContract.KeyValueStorage storage;
+    private NetworkContract.NetworkStorage storage;
 
     @Inject
-    public SessionManager(AuthApi authApi, StorageContract.KeyValueStorage storage) {
+    public SessionManager(AuthApi authApi, NetworkContract.NetworkStorage storage) {
         this.authApi = authApi;
         this.storage = storage;
     }
 
     @Override
     public Completable logIn(String redirectUrl) {
-        return Single.fromCallable(() -> parseCode(redirectUrl))
-                .flatMap(code ->
-                        authApi.token(
-                                NetworkContract.CLIENT_ID,
-                                NetworkContract.CLIENT_SECRET,
-                                NetworkContract.TOKEN_FETCH_GRANT_TYPE,
-                                code,
-                                NetworkContract.REDIRECT_URL
-                        )
-                )
-                .flatMapCompletable(userTokenResponse -> {
-                    storage.save(USER_TOKEN_KEY, userTokenResponse, UserTokenResponse.class);
-                    return CompletableObserver::onComplete;
+        return Single.fromCallable(() -> parseToken(redirectUrl))
+                .flatMapCompletable(token -> {
+                    storage.saveAccessToken(token);
+                    return Completable.complete();
                 });
     }
 
@@ -55,26 +45,48 @@ public class SessionManager implements NetworkContract.SessionManager {
 
     @Override
     public Boolean isLogged() {
-        return storage.get(USER_TOKEN_KEY, UserTokenResponse.class) != null;
+        return storage.getAccessToken() != null;
     }
 
-    private String parseCode(String redirectUrl) {
+    @Override
+    public AuthInitiationData getAuthInitiationData() {
+        return new AuthInitiationData(getAuthUrl(), REDIRECT_URL);
+    }
+
+    private String getAuthUrl() {
+        Uri baseUri = Uri.parse(ENDPOINT + AUTH_PATH + "authorize");
+        Uri.Builder builder = new Uri.Builder();
+        builder.scheme(baseUri.getScheme())
+                .encodedAuthority(baseUri.getAuthority())
+                .encodedPath(baseUri.getPath())
+                .appendQueryParameter("response_type", "token")
+                .appendQueryParameter("client_id", CLIENT_ID)
+                .appendQueryParameter("redirect_uri", REDIRECT_URL)
+                .appendQueryParameter("state", UUID.randomUUID().toString())
+                .appendQueryParameter("scope", "browse");
+        return builder.build().toString();
+    }
+
+    private String parseToken(String redirectUrl) {
+
         Uri uri = Uri.parse(redirectUrl);
-        String code = uri.getQueryParameter("code");
-        if (code == null || code.isEmpty()) {
-            throw new RuntimeException("Can't parse code");
+        String encodedFragments = uri.getEncodedFragment();
+        if (encodedFragments == null) {
+            throw new RuntimeException("");
         }
-        return code;
-    }
+        String[] fragments = encodedFragments.split("&");
 
-    class CustomAuthenticator implements Authenticator {
-
-        @Override
-        public Request authenticate(Route route, @NonNull Response response) {
-            return null;
+        Map<String, String> fragmentsData = new HashMap<>();
+        for (String fragment : fragments) {
+            String[] pair = fragment.split("=");
+            fragmentsData.put(pair[0], pair[1]);
         }
 
+        String token = fragmentsData.get("access_token");
+        if (token == null || token.isEmpty()) {
+            throw new RuntimeException("Can't parse token");
+        }
+        return token;
     }
-
 
 }

@@ -4,10 +4,11 @@ import android.view.View;
 
 import javax.inject.Inject;
 
+import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
-import ua.sytor.deviantartclient.core.network.api.BrowseApi;
 import ua.sytor.deviantartclient.core.logger.Logger;
+import ua.sytor.deviantartclient.core.network.api.BrowseApi;
 import ua.sytor.deviantartclient.presentation.base.BaseFragmentPresenter;
 
 public class SearchScreenPresenter extends BaseFragmentPresenter<SearchScreenContract.View> implements SearchScreenContract.Presenter {
@@ -29,8 +30,9 @@ public class SearchScreenPresenter extends BaseFragmentPresenter<SearchScreenCon
 
         Disposable d = browseApi.browseNewest("", "", 0, 10)
                 .subscribeOn(Schedulers.io())
-                .observeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(response -> {
+                    getView().submitList(response.getResults());
                     Logger.log("Got response " + response.toString());
                 });
         addDisposable(d);

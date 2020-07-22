@@ -3,6 +3,7 @@ package ua.sytor.deviantartclient.core.network;
 import io.reactivex.Completable;
 import ua.sytor.deviantartclient.BuildConfig;
 import ua.sytor.deviantartclient.core.network.data.AuthInitiationData;
+import ua.sytor.deviantartclient.core.network.data.UserTokenResponse;
 
 public interface NetworkContract {
 
@@ -12,21 +13,32 @@ public interface NetworkContract {
     String REDIRECT_URL = "ua.syt0r.deviantartclient://oauth2";
 
     String CLIENT_ID = BuildConfig.CLIENT_ID;
-    String CLIENT_SECRET = BuildConfig.CLIENT_SECRET;
 
     String TOKEN_FETCH_GRANT_TYPE = "authorization_code";
     String TOKEN_REFRESH_GRANT_TYPE = "refresh_token";
 
     interface NetworkManager {
-        AuthInitiationData getAuthInitiationData();
-
         <T> T createApi(Class<T> clazz);
     }
 
     interface SessionManager {
+
+        AuthInitiationData getAuthInitiationData();
+
         Completable logIn(String redirectUrl);
+
         Completable logOut();
+
         Boolean isLogged();
+
+    }
+
+    interface NetworkStorage {
+
+        void saveAccessToken(String token);
+
+        String getAccessToken();
+
     }
 
 }

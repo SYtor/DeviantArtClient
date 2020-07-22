@@ -5,7 +5,6 @@ import android.view.View;
 import javax.inject.Inject;
 
 import io.reactivex.disposables.Disposable;
-import io.reactivex.schedulers.Schedulers;
 import ua.sytor.deviantartclient.core.use_case.contracts.CheckIsUserLoggedUseCase;
 import ua.sytor.deviantartclient.presentation.base.BaseFragmentPresenter;
 
@@ -31,7 +30,6 @@ public class LoginScreenPresenter extends BaseFragmentPresenter<LoginScreenContr
         super.onAttach(view);
 
         Disposable d = getView().observeSelectedOption()
-                .observeOn(Schedulers.io())
                 .forEach((loginOption) -> {
                     switch (loginOption) {
                         case AUTH:

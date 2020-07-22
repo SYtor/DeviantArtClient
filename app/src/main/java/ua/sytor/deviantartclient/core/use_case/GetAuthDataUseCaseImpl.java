@@ -8,16 +8,16 @@ import ua.sytor.deviantartclient.core.use_case.contracts.GetAuthDataUseCase;
 
 class GetAuthDataUseCaseImpl implements GetAuthDataUseCase {
 
-    private NetworkContract.NetworkManager networkManager;
+    private NetworkContract.SessionManager sessionManager;
 
     @Inject
-    public GetAuthDataUseCaseImpl(NetworkContract.NetworkManager networkManager) {
-        this.networkManager = networkManager;
+    public GetAuthDataUseCaseImpl(NetworkContract.SessionManager sessionManager) {
+        this.sessionManager = sessionManager;
     }
 
     @Override
     public AuthInitiationData getAuthData() {
-        return networkManager.getAuthInitiationData();
+        return sessionManager.getAuthInitiationData();
     }
 
 }

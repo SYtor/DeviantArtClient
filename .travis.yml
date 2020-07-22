@@ -1,7 +1,7 @@
 language: android
 android:
   components:
-    - build-tools-29.0.0
-    - android-28
+    - build-tools-30.0.0
+    - android-29
 script:
   - ./gradlew build
