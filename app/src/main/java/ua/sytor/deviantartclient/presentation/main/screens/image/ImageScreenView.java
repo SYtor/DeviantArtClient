@@ -1,4 +1,4 @@
-package ua.sytor.deviantartclient.presentation.main.screens.login;
+package ua.sytor.deviantartclient.presentation.main.screens.image;
 
 import android.view.View;
 
@@ -11,16 +11,13 @@ import ua.sytor.deviantartclient.R;
 import ua.sytor.deviantartclient.core.logger.Logger;
 import ua.sytor.deviantartclient.core.navigator.NavigatorContract;
 
-public class LoginScreenView implements LoginScreenContract.View {
+public class ImageScreenView implements ImageScreenContract.View {
 
     private NavigatorContract.Navigator navigator;
     private Subject<Integer> loginDataObservable;
 
-    private View loadingLayout;
-    private View loadedLayout;
-
     @Inject
-    public LoginScreenView(NavigatorContract.Navigator navigator) {
+    public ImageScreenView(NavigatorContract.Navigator navigator) {
         Logger.log("LoginScreenView");
         this.navigator = navigator;
         loginDataObservable = PublishSubject.create();
@@ -32,8 +29,6 @@ public class LoginScreenView implements LoginScreenContract.View {
             Logger.log("login button clicked");
             loginDataObservable.onNext(v.getId());
         });
-        loadingLayout = view.findViewById(R.id.loading_layout);
-        loadedLayout = view.findViewById(R.id.loaded_layout);
     }
 
     @Override
@@ -44,16 +39,6 @@ public class LoginScreenView implements LoginScreenContract.View {
     @Override
     public Observable<Integer> observeButtonClick() {
         return loginDataObservable;
-    }
-
-    @Override
-    public void setLoadingVisibility(boolean isVisible) {
-        loadingLayout.setVisibility(isVisible ? View.VISIBLE : View.INVISIBLE);
-    }
-
-    @Override
-    public void setLoadedVisibility(boolean isVisible) {
-        loadedLayout.setVisibility(isVisible ? View.VISIBLE : View.INVISIBLE);
     }
 
     @Override

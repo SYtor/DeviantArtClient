@@ -51,6 +51,9 @@ public class BaseImageAdapter extends RecyclerView.Adapter<BaseImageAdapter.Imag
         public ImageViewHolder(@NonNull View itemView) {
             super(itemView);
             imageView = itemView.findViewById(R.id.image);
+            imageView.setOnClickListener((v) -> {
+
+            });
         }
 
         public ImageView getImageView() {

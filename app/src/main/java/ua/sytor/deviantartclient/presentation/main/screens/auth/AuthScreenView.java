@@ -66,7 +66,7 @@ public class AuthScreenView implements AuthScreenContract.View {
 
     @Override
     public void navigateToApp() {
-        navigator.navigate(R.id.action_auth_fragment_to_search_fragment);
+        navigator.navigateBack();
     }
 
     class CustomWebClient extends WebViewClient {

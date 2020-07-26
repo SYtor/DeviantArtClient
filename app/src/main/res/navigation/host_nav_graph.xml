@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	xmlns:tools="http://schemas.android.com/tools"
+	app:startDestination="@id/browse_fragment">
+
+	<fragment
+		android:id="@+id/browse_fragment"
+		android:name="ua.sytor.deviantartclient.presentation.main.screens.host.screens.search.SearchFragment"
+		tools:layout="@layout/fragment_search" />
+
+	<fragment
+		android:id="@+id/search_fragment"
+		android:name="ua.sytor.deviantartclient.presentation.main.screens.host.screens.search.SearchFragment"
+		tools:layout="@layout/fragment_search" />
+
+	<fragment
+		android:id="@+id/account_fragment"
+		android:name="ua.sytor.deviantartclient.presentation.main.screens.host.screens.search.SearchFragment"
+		tools:layout="@layout/fragment_search" />
+
+</navigation>

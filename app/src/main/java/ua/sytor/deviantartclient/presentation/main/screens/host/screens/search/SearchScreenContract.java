@@ -1,4 +1,4 @@
-package ua.sytor.deviantartclient.presentation.main.screens.search;
+package ua.sytor.deviantartclient.presentation.main.screens.host.screens.search;
 
 import java.util.List;
 
@@ -12,6 +12,8 @@ public interface SearchScreenContract {
         Observable<Integer> onListScrolledToEndObservable();
 
         void submitList(List<Deviation> list);
+
+        void showAuthError();
     }
 
     interface Presenter {

@@ -1,11 +1,11 @@
-package ua.sytor.deviantartclient.presentation.main.screens.search.di;
+package ua.sytor.deviantartclient.presentation.main.screens.host.screens.search.di;
 
 import dagger.Binds;
 import dagger.Module;
 import ua.sytor.deviantartclient.presentation.base.BaseFragmentPresenter;
-import ua.sytor.deviantartclient.presentation.main.screens.search.SearchScreenContract;
-import ua.sytor.deviantartclient.presentation.main.screens.search.SearchScreenPresenter;
-import ua.sytor.deviantartclient.presentation.main.screens.search.SearchScreenView;
+import ua.sytor.deviantartclient.presentation.main.screens.host.screens.search.SearchScreenContract;
+import ua.sytor.deviantartclient.presentation.main.screens.host.screens.search.SearchScreenPresenter;
+import ua.sytor.deviantartclient.presentation.main.screens.host.screens.search.SearchScreenView;
 
 @Module
 public abstract class SearchScreenModule {

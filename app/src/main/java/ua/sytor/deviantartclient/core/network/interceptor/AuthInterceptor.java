@@ -10,6 +10,7 @@ import okhttp3.Interceptor;
 import okhttp3.Request;
 import okhttp3.Response;
 import ua.sytor.deviantartclient.core.network.NetworkContract;
+import ua.sytor.deviantartclient.core.network.errors.AuthFailedException;
 
 public class AuthInterceptor implements Interceptor {
 
@@ -23,16 +24,23 @@ public class AuthInterceptor implements Interceptor {
     @NonNull
     @Override
     public Response intercept(Chain chain) throws IOException {
-        Request request = chain.request();
+        Request request = createRequestWithToken(chain.request());
+        Response response = chain.proceed(request);
 
+        if (response.code() == 401)
+            throw new AuthFailedException();
+
+        return response;
+    }
+
+    private Request createRequestWithToken(Request request) {
         String token = storage.getAccessToken();
         if (token != null && !token.isEmpty()) {
-            request = request.newBuilder()
+            return request.newBuilder()
                     .header("Authorization", "Bearer " + token)
                     .build();
         }
-
-        return chain.proceed(request);
+        return request;
     }
 
 }

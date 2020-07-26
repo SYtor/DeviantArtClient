@@ -1,9 +1,9 @@
 package ua.sytor.deviantartclient.core.network;
 
 import io.reactivex.Completable;
+import io.reactivex.Single;
 import ua.sytor.deviantartclient.BuildConfig;
 import ua.sytor.deviantartclient.core.network.data.AuthInitiationData;
-import ua.sytor.deviantartclient.core.network.data.UserTokenResponse;
 
 public interface NetworkContract {
 
@@ -29,7 +29,7 @@ public interface NetworkContract {
 
         Completable logOut();
 
-        Boolean isLogged();
+        Single<Boolean> isLogged();
 
     }
 

@@ -1,24 +1,21 @@
-package ua.sytor.deviantartclient.presentation.main.screens.login;
+package ua.sytor.deviantartclient.presentation.main.screens.image;
 
 import android.view.View;
 
 import javax.inject.Inject;
 
-import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
-import io.reactivex.schedulers.Schedulers;
 import ua.sytor.deviantartclient.R;
-import ua.sytor.deviantartclient.core.logger.Logger;
 import ua.sytor.deviantartclient.core.use_case.contracts.CheckIsUserLoggedUseCase;
 import ua.sytor.deviantartclient.presentation.base.BaseFragmentPresenter;
 
-public class LoginScreenPresenter extends BaseFragmentPresenter<LoginScreenContract.View> implements LoginScreenContract.Presenter {
+public class ImageScreenPresenter extends BaseFragmentPresenter<ImageScreenContract.View> implements ImageScreenContract.Presenter {
 
     private CheckIsUserLoggedUseCase checkIsUserLoggedUseCase;
 
     @Inject
-    public LoginScreenPresenter(
-            LoginScreenContract.View view,
+    public ImageScreenPresenter(
+            ImageScreenContract.View view,
             CheckIsUserLoggedUseCase checkIsUserLoggedUseCase
     ) {
         super(view);
@@ -37,19 +34,9 @@ public class LoginScreenPresenter extends BaseFragmentPresenter<LoginScreenContr
 
     private Disposable checkIsLogged() {
         return checkIsUserLoggedUseCase.isLogged()
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .doOnSubscribe((disposable) -> {
-                    getView().setLoadingVisibility(true);
-                    getView().setLoadedVisibility(false);
-                })
                 .subscribe((isLogged) -> {
-                    Logger.log("isLogged = " + isLogged);
                     if (isLogged) {
                         getView().navigateToApp();
-                    } else {
-                        getView().setLoadingVisibility(false);
-                        getView().setLoadedVisibility(true);
                     }
                 });
     }

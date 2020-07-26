@@ -2,6 +2,7 @@ package ua.sytor.deviantartclient.core.use_case;
 
 import javax.inject.Inject;
 
+import io.reactivex.Single;
 import ua.sytor.deviantartclient.core.network.NetworkContract;
 import ua.sytor.deviantartclient.core.use_case.contracts.CheckIsUserLoggedUseCase;
 
@@ -15,7 +16,7 @@ class CheckIsUserLoggedUseCaseImpl implements CheckIsUserLoggedUseCase {
     }
 
     @Override
-    public Boolean isLogged() {
+    public Single<Boolean> isLogged() {
         return sessionManager.isLogged();
     }
 

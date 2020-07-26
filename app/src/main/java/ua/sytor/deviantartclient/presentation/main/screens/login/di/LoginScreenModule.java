@@ -1,28 +1,21 @@
 package ua.sytor.deviantartclient.presentation.main.screens.login.di;
 
+import dagger.Binds;
 import dagger.Module;
-import dagger.Provides;
-import ua.sytor.deviantartclient.core.navigator.NavigatorContract;
-import ua.sytor.deviantartclient.core.use_case.contracts.CheckIsUserLoggedUseCase;
 import ua.sytor.deviantartclient.presentation.base.BaseFragmentPresenter;
 import ua.sytor.deviantartclient.presentation.main.screens.login.LoginScreenContract;
 import ua.sytor.deviantartclient.presentation.main.screens.login.LoginScreenPresenter;
 import ua.sytor.deviantartclient.presentation.main.screens.login.LoginScreenView;
 
 @Module
-public class LoginScreenModule {
+public abstract class LoginScreenModule {
 
-    @Provides
-    public LoginScreenContract.View provideView(NavigatorContract.Navigator navigator) {
-        return new LoginScreenView(navigator);
-    }
+    @Binds
+    public abstract LoginScreenContract.View provideView(LoginScreenView view);
 
-    @Provides
-    public BaseFragmentPresenter<LoginScreenContract.View> providePresenter(
-            LoginScreenContract.View view,
-            CheckIsUserLoggedUseCase checkIsUserLoggedUseCas
-    ) {
-        return new LoginScreenPresenter(view, checkIsUserLoggedUseCas);
-    }
+    @Binds
+    public abstract BaseFragmentPresenter<LoginScreenContract.View> providePresenter(
+            LoginScreenPresenter presenter
+    );
 
 }

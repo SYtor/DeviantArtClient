@@ -1,4 +1,4 @@
-package ua.sytor.deviantartclient.presentation.main.screens.login;
+package ua.sytor.deviantartclient.presentation.main.screens.image;
 
 import android.content.Context;
 
@@ -11,13 +11,13 @@ import ua.sytor.deviantartclient.core.utils.DiUtils;
 import ua.sytor.deviantartclient.presentation.base.BaseFragment;
 import ua.sytor.deviantartclient.presentation.base.BaseFragmentPresenter;
 
-public class LoginFragment extends BaseFragment<LoginScreenContract.View, BaseFragmentPresenter<LoginScreenContract.View>> {
+public class ImageFragment extends BaseFragment<ImageScreenContract.View, BaseFragmentPresenter<ImageScreenContract.View>> {
 
     @Inject
-    LoginScreenContract.View view;
+    ImageScreenContract.View view;
 
     @Inject
-    BaseFragmentPresenter<LoginScreenContract.View> presenter;
+    BaseFragmentPresenter<ImageScreenContract.View> presenter;
 
     @NonNull
     @Override
@@ -26,14 +26,15 @@ public class LoginFragment extends BaseFragment<LoginScreenContract.View, BaseFr
     }
 
     @Override
-    public BaseFragmentPresenter<LoginScreenContract.View> getPresenter() {
+    public BaseFragmentPresenter<ImageScreenContract.View> getPresenter() {
         return presenter;
     }
+
 
     @Override
     protected void setupDI(Context context) {
         DiUtils.getAppComponent(context)
-                .loginScreenBuilder()
+                .imageScreenBuilder()
                 .fragment(this)
                 .build()
                 .inject(this);

@@ -10,6 +10,7 @@ public interface NavigatorContract {
         void setupToolbar(Toolbar toolbar);
 
         void navigate(@IdRes int destinationId);
+        void navigateBack();
 
     }
 

@@ -33,6 +33,11 @@ public class AuthFragment extends BaseFragment<AuthScreenContract.View, BaseFrag
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
+
+    }
+
+    @Override
+    protected void setupDI(Context context) {
         DiUtils.getAppComponent(context)
                 .authScreenBuilder()
                 .fragment(this)

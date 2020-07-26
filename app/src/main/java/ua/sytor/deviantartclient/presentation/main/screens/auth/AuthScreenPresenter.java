@@ -51,7 +51,13 @@ public class AuthScreenPresenter extends BaseFragmentPresenter<AuthScreenContrac
                 })
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(() -> getView().navigateToApp());
+                .subscribe(
+                        () -> {
+                            Logger.log("result");
+                            getView().navigateToApp();
+                        }
+
+                );
         addDisposable(d);
 
     }

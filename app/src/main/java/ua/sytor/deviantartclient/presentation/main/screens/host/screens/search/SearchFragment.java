@@ -1,4 +1,4 @@
-package ua.sytor.deviantartclient.presentation.main.screens.login;
+package ua.sytor.deviantartclient.presentation.main.screens.host.screens.search;
 
 import android.content.Context;
 
@@ -11,29 +11,26 @@ import ua.sytor.deviantartclient.core.utils.DiUtils;
 import ua.sytor.deviantartclient.presentation.base.BaseFragment;
 import ua.sytor.deviantartclient.presentation.base.BaseFragmentPresenter;
 
-public class LoginFragment extends BaseFragment<LoginScreenContract.View, BaseFragmentPresenter<LoginScreenContract.View>> {
+public class SearchFragment extends BaseFragment<SearchScreenContract.View, BaseFragmentPresenter<SearchScreenContract.View>> {
 
     @Inject
-    LoginScreenContract.View view;
-
-    @Inject
-    BaseFragmentPresenter<LoginScreenContract.View> presenter;
+    BaseFragmentPresenter<SearchScreenContract.View> presenter;
 
     @NonNull
     @Override
     protected Integer getLayoutResId() {
-        return R.layout.fragment_login;
+        return R.layout.fragment_search;
     }
 
     @Override
-    public BaseFragmentPresenter<LoginScreenContract.View> getPresenter() {
+    protected BaseFragmentPresenter<SearchScreenContract.View> getPresenter() {
         return presenter;
     }
 
     @Override
     protected void setupDI(Context context) {
         DiUtils.getAppComponent(context)
-                .loginScreenBuilder()
+                .searchScreenBuilder()
                 .fragment(this)
                 .build()
                 .inject(this);

@@ -27,4 +27,8 @@ public class Navigator implements NavigatorContract.Navigator {
         navController.navigate(destinationId);
     }
 
+    @Override
+    public void navigateBack() {
+        navController.navigateUp();
+    }
 }

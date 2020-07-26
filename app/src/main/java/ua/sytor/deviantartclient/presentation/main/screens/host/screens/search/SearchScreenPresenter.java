@@ -1,4 +1,4 @@
-package ua.sytor.deviantartclient.presentation.main.screens.search;
+package ua.sytor.deviantartclient.presentation.main.screens.host.screens.search;
 
 import android.view.View;
 
@@ -8,7 +8,9 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 import ua.sytor.deviantartclient.core.logger.Logger;
+import ua.sytor.deviantartclient.core.network.NetworkContract;
 import ua.sytor.deviantartclient.core.network.api.BrowseApi;
+import ua.sytor.deviantartclient.core.network.errors.AuthFailedException;
 import ua.sytor.deviantartclient.presentation.base.BaseFragmentPresenter;
 
 public class SearchScreenPresenter extends BaseFragmentPresenter<SearchScreenContract.View> implements SearchScreenContract.Presenter {
@@ -27,15 +29,25 @@ public class SearchScreenPresenter extends BaseFragmentPresenter<SearchScreenCon
     @Override
     public void onAttach(View view) {
         super.onAttach(view);
+        addDisposable(handleRequest());
+    }
 
-        Disposable d = browseApi.browseNewest("", "", 0, 10)
+    private Disposable handleRequest() {
+        return browseApi.browseNewest("", "", 0, 20)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(response -> {
-                    getView().submitList(response.getResults());
-                    Logger.log("Got response " + response.toString());
-                });
-        addDisposable(d);
+                .subscribe(
+                        response -> {
+                            getView().submitList(response.getResults());
+                            Logger.log("Got response " + response.toString());
+                        },
+                        throwable -> {
+                            if (throwable instanceof AuthFailedException) {
 
+                            }
+                        }
+                );
     }
+
+
 }

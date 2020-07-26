@@ -1,9 +1,8 @@
-package ua.sytor.deviantartclient.presentation.main.screens.search;
+package ua.sytor.deviantartclient.presentation.main.screens.host.screens.search;
 
 import android.view.View;
 
-import androidx.appcompat.widget.Toolbar;
-import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
@@ -14,6 +13,7 @@ import io.reactivex.Observable;
 import ua.sytor.deviantartclient.R;
 import ua.sytor.deviantartclient.core.navigator.NavigatorContract;
 import ua.sytor.deviantartclient.core.network.data.deviation.Deviation;
+import ua.sytor.deviantartclient.core.utils.RecyclerViewUtils;
 import ua.sytor.deviantartclient.presentation.base.BaseImageAdapter;
 
 public class SearchScreenView implements SearchScreenContract.View {
@@ -29,12 +29,12 @@ public class SearchScreenView implements SearchScreenContract.View {
 
     @Override
     public void onAttach(View view) {
-        Toolbar toolbar = view.findViewById(R.id.toolbar);
-        navigator.setupToolbar(toolbar);
-
         RecyclerView recyclerView = view.findViewById(R.id.recycler);
-        recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
+        GridLayoutManager layoutManager = new GridLayoutManager(view.getContext(), 2);
+        recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapter);
+
+        RecyclerViewUtils.addGridRowSpacing(recyclerView, R.dimen.recycler_row_item_spacing);
     }
 
     @Override
@@ -43,12 +43,18 @@ public class SearchScreenView implements SearchScreenContract.View {
     }
 
     @Override
+    public Observable<Integer> onListScrolledToEndObservable() {
+        return null;
+    }
+
+    @Override
     public void submitList(List<Deviation> list) {
         adapter.setList(list);
     }
 
     @Override
-    public Observable<Integer> onListScrolledToEndObservable() {
-        return null;
+    public void showAuthError() {
+
     }
+
 }

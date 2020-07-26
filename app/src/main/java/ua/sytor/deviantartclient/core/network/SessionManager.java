@@ -12,6 +12,7 @@ import io.reactivex.Completable;
 import io.reactivex.Single;
 import ua.sytor.deviantartclient.core.network.api.AuthApi;
 import ua.sytor.deviantartclient.core.network.data.AuthInitiationData;
+import ua.sytor.deviantartclient.core.network.errors.AuthFailedException;
 
 import static ua.sytor.deviantartclient.core.network.NetworkContract.AUTH_PATH;
 import static ua.sytor.deviantartclient.core.network.NetworkContract.CLIENT_ID;
@@ -44,8 +45,20 @@ public class SessionManager implements NetworkContract.SessionManager {
     }
 
     @Override
-    public Boolean isLogged() {
-        return storage.getAccessToken() != null;
+    public Single<Boolean> isLogged() {
+        String accessToken = storage.getAccessToken();
+        if (accessToken == null) {
+            return Single.just(false);
+        }
+        return authApi.placebo(accessToken)
+                .andThen(Single.just(true))
+                .onErrorReturn(throwable -> {
+                    if (throwable instanceof AuthFailedException) {
+                        return false;
+                    } else {
+                        throw new IllegalStateException(throwable);
+                    }
+                });
     }
 
     @Override
