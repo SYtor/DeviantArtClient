@@ -27,6 +27,7 @@ public class LoginScreenPresenter extends BaseFragmentPresenter<LoginScreenContr
 
     @Override
     public void onAttach(View view) {
+        Logger.log(">>");
         super.onAttach(view);
 
         addDisposable(checkIsLogged());

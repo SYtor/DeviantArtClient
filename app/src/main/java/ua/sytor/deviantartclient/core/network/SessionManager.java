@@ -10,6 +10,7 @@ import javax.inject.Inject;
 
 import io.reactivex.Completable;
 import io.reactivex.Single;
+import ua.sytor.deviantartclient.core.logger.Logger;
 import ua.sytor.deviantartclient.core.network.api.AuthApi;
 import ua.sytor.deviantartclient.core.network.data.AuthInitiationData;
 import ua.sytor.deviantartclient.core.network.errors.AuthFailedException;
@@ -34,6 +35,7 @@ public class SessionManager implements NetworkContract.SessionManager {
     public Completable logIn(String redirectUrl) {
         return Single.fromCallable(() -> parseToken(redirectUrl))
                 .flatMapCompletable(token -> {
+                    Logger.log("saving token[%s]", token);
                     storage.saveAccessToken(token);
                     return Completable.complete();
                 });
@@ -81,11 +83,11 @@ public class SessionManager implements NetworkContract.SessionManager {
     }
 
     private String parseToken(String redirectUrl) {
-
+        Logger.log(">> redirectUrl[%s]", redirectUrl);
         Uri uri = Uri.parse(redirectUrl);
         String encodedFragments = uri.getEncodedFragment();
         if (encodedFragments == null) {
-            throw new RuntimeException("");
+            throw new RuntimeException("Can't parse token");
         }
         String[] fragments = encodedFragments.split("&");
 
@@ -99,6 +101,7 @@ public class SessionManager implements NetworkContract.SessionManager {
         if (token == null || token.isEmpty()) {
             throw new RuntimeException("Can't parse token");
         }
+        Logger.log(">> token[%s]", token);
         return token;
     }
 

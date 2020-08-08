@@ -13,7 +13,6 @@ public class HostScreenView implements HostScreenContract.View {
 
     @Inject
     public HostScreenView(NavigatorContract.Navigator navigator) {
-        Logger.log("LoginScreenView");
         this.navigator = navigator;
     }
 

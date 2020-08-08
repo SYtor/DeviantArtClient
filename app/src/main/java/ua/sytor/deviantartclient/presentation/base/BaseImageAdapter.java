@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -18,7 +19,7 @@ import ua.sytor.deviantartclient.core.network.data.deviation.Deviation;
 
 public class BaseImageAdapter extends RecyclerView.Adapter<BaseImageAdapter.ImageViewHolder> {
 
-    private List<Deviation> list = Collections.emptyList();
+    private List<Deviation> list = new ArrayList<>();
 
     @NonNull
     @Override
@@ -31,7 +32,10 @@ public class BaseImageAdapter extends RecyclerView.Adapter<BaseImageAdapter.Imag
     @Override
     public void onBindViewHolder(@NonNull ImageViewHolder holder, int position) {
         Deviation deviation = list.get(position);
-        Picasso.get().load(deviation.getContent().getSrc()).into(holder.getImageView());
+        Picasso.get()
+                .load(deviation.getContent().getSrc())
+                .fit()
+                .into(holder.getImageView());
     }
 
     @Override
@@ -41,6 +45,11 @@ public class BaseImageAdapter extends RecyclerView.Adapter<BaseImageAdapter.Imag
 
     public void setList(List<Deviation> list) {
         this.list = list;
+        notifyDataSetChanged();
+    }
+
+    public void addList(List<Deviation> list) {
+        this.list.addAll(list);
         notifyDataSetChanged();
     }
 

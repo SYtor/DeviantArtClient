@@ -21,7 +21,7 @@ public class LoginScreenView implements LoginScreenContract.View {
 
     @Inject
     public LoginScreenView(NavigatorContract.Navigator navigator) {
-        Logger.log("LoginScreenView");
+        Logger.log(">>");
         this.navigator = navigator;
         loginDataObservable = PublishSubject.create();
     }

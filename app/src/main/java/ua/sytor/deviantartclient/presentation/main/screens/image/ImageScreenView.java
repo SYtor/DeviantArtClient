@@ -18,7 +18,6 @@ public class ImageScreenView implements ImageScreenContract.View {
 
     @Inject
     public ImageScreenView(NavigatorContract.Navigator navigator) {
-        Logger.log("LoginScreenView");
         this.navigator = navigator;
         loginDataObservable = PublishSubject.create();
     }

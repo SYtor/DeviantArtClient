@@ -4,6 +4,7 @@ import android.view.View;
 
 import javax.inject.Inject;
 
+import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
@@ -45,19 +46,19 @@ public class AuthScreenPresenter extends BaseFragmentPresenter<AuthScreenContrac
 
         Disposable d = getView().observeAuthState()
                 .observeOn(Schedulers.io())
-                .switchMapCompletable(authRedirectData -> {
+                .switchMap(authRedirectData -> {
+                    Logger.log("on redirect url received url=" + authRedirectData.getRedirectUrl());
                     latestAuthRedirectData = authRedirectData;
-                    return getUserAccessTokenUseCase.getAccessToken(authRedirectData.getRedirectUrl());
+                    return getUserAccessTokenUseCase
+                            .getAccessToken(authRedirectData.getRedirectUrl())
+                            .andThen(Observable.just(true)); // In order to subscribe onNext could be invoked without completing subject
                 })
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(
-                        () -> {
-                            Logger.log("result");
-                            getView().navigateToApp();
-                        }
-
-                );
+                .subscribe((a) -> {
+                    Logger.log("result");
+                    getView().navigateToApp();
+                });
         addDisposable(d);
 
     }

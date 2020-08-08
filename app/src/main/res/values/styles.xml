@@ -14,4 +14,17 @@
 		<item name="colorPrimary">@color/accent</item>
 	</style>
 
+	<style name="Search" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+		<item name="boxBackgroundColor">@color/primary</item>
+		<item name="boxStrokeColor">@color/color_state_list</item>
+		<item name="boxStrokeWidth">1dp</item>
+		<item name="endIconDrawable">@drawable/ic_search</item>
+		<item name="endIconTint">@color/accent</item>
+		<item name="boxCornerRadiusTopEnd">20dp</item>
+		<item name="boxCornerRadiusTopStart">20dp</item>
+		<item name="boxCornerRadiusBottomEnd">20dp</item>
+		<item name="boxCornerRadiusBottomStart">20dp</item>
+		<item name="endIconMode">custom</item>
+	</style>
+
 </resources>

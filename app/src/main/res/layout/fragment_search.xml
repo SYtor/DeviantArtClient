@@ -5,6 +5,12 @@
 	android:layout_width="match_parent"
 	android:layout_height="match_parent">
 
+	<androidx.recyclerview.widget.RecyclerView
+		android:id="@+id/recycler"
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		tools:listitem="@layout/view_holder_image" />
+
 	<com.google.android.material.appbar.AppBarLayout
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content">
@@ -12,15 +18,15 @@
 		<com.google.android.material.appbar.CollapsingToolbarLayout
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
+			android:elevation="0dp"
 			android:padding="16dp"
-			app:layout_scrollFlags="scroll|enterAlways">
+			android:background="@android:color/transparent"
+			app:layout_scrollFlags="noScroll|enterAlways">
 
 			<com.google.android.material.textfield.TextInputLayout
-				style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+				style="@style/Search"
 				android:layout_width="match_parent"
-				android:layout_height="wrap_content"
-				app:endIconDrawable="@drawable/ic_search"
-				app:endIconMode="custom">
+				android:layout_height="wrap_content">
 
 				<com.google.android.material.textfield.TextInputEditText
 					android:layout_width="match_parent"
@@ -31,12 +37,5 @@
 		</com.google.android.material.appbar.CollapsingToolbarLayout>
 
 	</com.google.android.material.appbar.AppBarLayout>
-
-	<androidx.recyclerview.widget.RecyclerView
-		android:id="@+id/recycler"
-		android:layout_width="match_parent"
-		android:layout_height="match_parent"
-		app:layout_behavior="@string/appbar_scrolling_view_behavior"
-		tools:listitem="@layout/view_holder_image" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

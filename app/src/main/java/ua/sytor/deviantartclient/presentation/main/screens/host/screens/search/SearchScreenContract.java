@@ -4,16 +4,22 @@ import java.util.List;
 
 import io.reactivex.Observable;
 import ua.sytor.deviantartclient.core.network.data.deviation.Deviation;
+import ua.sytor.deviantartclient.core.utils.Complete;
 import ua.sytor.deviantartclient.presentation.base.FragmentView;
 
 public interface SearchScreenContract {
 
     interface View extends FragmentView {
-        Observable<Integer> onListScrolledToEndObservable();
 
-        void submitList(List<Deviation> list);
+        Observable<Complete> subscribeOnEndReached();
+        Observable<Complete> subscribeOnRetryClick();
+
+        void addDeviations(List<Deviation> list);
 
         void showAuthError();
+
+        void showRequestError();
+
     }
 
     interface Presenter {

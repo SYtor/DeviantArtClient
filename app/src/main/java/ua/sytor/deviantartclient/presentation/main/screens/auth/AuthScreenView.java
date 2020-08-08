@@ -27,7 +27,6 @@ public class AuthScreenView implements AuthScreenContract.View {
 
     @Inject
     public AuthScreenView(NavigatorContract.Navigator navigator) {
-        Logger.log("LoginScreenView");
         this.navigator = navigator;
         authSubject = PublishSubject.create();
     }
